@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Сергей — мастер по дереву. Вазы, пиалы, подсвечники, декор. Лак Уруси. Россия."/>
+  <meta name="theme-color" content="#4F5D61"/>
+  <title>Сергей — Мастер по дереву</title>
+
+  <!-- ═══ LOADER + КРИТИЧЕСКИЕ СТИЛИ (рендер до шрифтов) ═══ -->
+  <style>
+    html{scroll-behavior:smooth}
+    body{margin:0;padding:0;background:#fff;overflow-x:hidden}
+
+    /* LOADER */
+    #loader{
+      position:fixed;inset:0;z-index:99999;
+      background:#4F5D61;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      transition:opacity .7s ease,visibility .7s ease;
+    }
+    #loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .ld-ring{width:72px;height:72px;margin-bottom:24px;position:relative;display:flex;align-items:center;justify-content:center}
+    .ld-ring::before,.ld-ring::after{content:'';position:absolute;inset:0;border-radius:50%}
+    .ld-ring::before{border:3px solid rgba(153,179,182,.2)}
+    .ld-ring::after{border:3px solid transparent;border-top-color:#FF6E35;border-right-color:#99B3B6;animation:ldSpin 1s cubic-bezier(.6,.2,.4,.8) infinite}
+    @keyframes ldSpin{to{transform:rotate(360deg)}}
+    .ld-em{font-size:1.8rem}
+    .ld-text{color:#99B3B6;font-family:system-ui,sans-serif;font-size:.76rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;animation:ldPulse 1.4s ease infinite}
+    @keyframes ldPulse{0%,100%{opacity:.4}50%{opacity:1}}
+    .ld-bar{width:160px;height:2px;background:rgba(153,179,182,.2);border-radius:99px;margin-top:16px;overflow:hidden}
+    .ld-fill{height:100%;background:linear-gradient(90deg,#99B3B6,#FF6E35);border-radius:99px;width:0;animation:ldFill 1.5s ease-out forwards}
+    @keyframes ldFill{to{width:100%}}
+
+    /* AUTH MODAL */
+    .auth-modal{position:fixed;inset:0;z-index:89000;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+    .auth-modal.open{display:flex}
+    .auth-box{background:#fff;border-radius:20px;padding:40px 36px;width:340px;max-width:90vw;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.3);animation:authIn .4s cubic-bezier(.34,1.56,.64,1)}
+    @keyframes authIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+    .auth-box h3{font-size:1.2rem;font-weight:800;color:#4F5D61;margin-bottom:6px}
+    .auth-box p{font-size:.85rem;color:#6b7280;margin-bottom:22px}
+    .auth-inp{width:100%;font-family:system-ui,sans-serif;font-size:.92rem;padding:12px 16px;border-radius:10px;border:1.5px solid #e5e7eb;outline:none;margin-bottom:12px;box-sizing:border-box;transition:border-color .3s}
+    .auth-inp:focus{border-color:#99B3B6}
+    .auth-inp.err{border-color:#f87171}
+    .auth-btn{width:100%;padding:12px;border-radius:10px;background:#4F5D61;color:#fff;border:none;font-family:system-ui,sans-serif;font-size:.93rem;font-weight:700;cursor:pointer;transition:background .3s}
+    .auth-btn:hover{background:#3a4548}
+    .auth-err{color:#dc2626;font-size:.8rem;margin-top:8px;display:none}
+    .auth-err.show{display:block}
+    .auth-cancel{margin-top:12px;background:none;border:none;color:#6b7280;font-size:.82rem;cursor:pointer;font-family:system-ui}
+    .auth-cancel:hover{color:#4F5D61}
+
+    /* TELEGRAM MODAL */
+    .tg-modal{position:fixed;inset:0;z-index:95000;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:16px}
+    .tg-modal.open{display:flex}
+    .tg-box{background:#fff;border-radius:24px;width:420px;max-width:100%;box-shadow:0 28px 80px rgba(0,0,0,.35);overflow:hidden;animation:authIn .4s cubic-bezier(.34,1.56,.64,1)}
+    .tg-header{background:linear-gradient(135deg,#229ED9,#1a7fb5);padding:28px 28px 24px;color:#fff;text-align:center;position:relative}
+    .tg-header-icon{font-size:3rem;margin-bottom:10px}
+    .tg-header h3{font-size:1.3rem;font-weight:800;margin-bottom:4px}
+    .tg-header p{font-size:.85rem;opacity:.85;line-height:1.5}
+    .tg-close-btn{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .3s;font-size:.9rem}
+    .tg-close-btn:hover{background:rgba(255,255,255,.35)}
+    .tg-body{padding:28px}
+    .tg-phone-display{background:#f0f9ff;border:2px solid #bae6fd;border-radius:12px;padding:14px 18px;text-align:center;margin-bottom:20px}
+    .tg-phone-display .ph-label{font-size:.75rem;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+    .tg-phone-display .ph-num{font-size:1.25rem;font-weight:800;color:#0c4a6e;letter-spacing:.05em}
+    .tg-msg-label{font-size:.84rem;font-weight:700;color:#4F5D61;margin-bottom:8px;display:block}
+    .tg-msg-inp{width:100%;font-family:inherit;font-size:.9rem;padding:12px 15px;border-radius:10px;border:1.5px solid #e5e7eb;outline:none;resize:vertical;min-height:100px;box-sizing:border-box;transition:border-color .3s,box-shadow .3s;color:#1a1a1a}
+    .tg-msg-inp:focus{border-color:#229ED9;box-shadow:0 0 0 3px rgba(34,158,217,.15)}
+    .tg-actions{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+    .tg-btn-open{display:flex;align-items:center;justify-content:center;gap:10px;background:#229ED9;color:#fff;padding:14px 24px;border-radius:12px;font-family:inherit;font-size:.95rem;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all .3s}
+    .tg-btn-open:hover{background:#1a7fb5;transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,158,217,.35)}
+    .tg-btn-web{display:flex;align-items:center;justify-content:center;gap:8px;background:#f0f4f4;color:#4F5D61;padding:12px 24px;border-radius:12px;font-family:inherit;font-size:.9rem;font-weight:600;border:none;cursor:pointer;text-decoration:none;transition:all .3s}
+    .tg-btn-web:hover{background:#e0e8e8;transform:translateY(-1px)}
+    .tg-note{font-size:.76rem;color:#9ca3af;text-align:center;margin-top:12px;line-height:1.5}
+
+    /* IDB STATUS */
+    .idb-status{position:fixed;top:76px;right:16px;z-index:800;background:#fff;border:1.5px solid #e5e7eb;border-radius:10px;padding:8px 14px;font-size:.76rem;font-weight:600;color:#4F5D61;box-shadow:0 4px 14px rgba(0,0,0,.1);display:none;align-items:center;gap:7px;transition:all .3s}
+    .idb-status.show{display:flex}
+    .idb-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:dotPulse2 2s ease infinite}
+    @keyframes dotPulse2{0%,100%{opacity:1}50%{opacity:.4}}
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* ═══════════════════════════════════════
+       ПЕРЕМЕННЫЕ
+    ═══════════════════════════════════════ */
+    :root{
+      --primary:#4F5D61;--primary-d:#3a4548;
+      --accent1:#99B3B6;--accent2:#FF6E35;--accent2-d:#e85d22;
+      --bg:#fff;--bg2:#F6F8F8;
+      --text:#1a1a1a;--muted:#6b7280;--border:#e5e7eb;
+      --radius:12px;--radius-lg:20px;
+      --shadow:0 4px 24px rgba(79,93,97,.10);
+      --shadow-lg:0 12px 48px rgba(79,93,97,.18);
+      --tr:.35s cubic-bezier(.4,0,.2,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Geist',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    button{cursor:pointer;font-family:inherit}
+
+    /* ═══ REVEAL ═══ */
+    .reveal,.reveal-l,.reveal-r{opacity:0;transition:opacity .7s ease,transform .7s ease}
+    .reveal{transform:translateY(40px)}
+    .reveal-l{transform:translateX(-40px)}
+    .reveal-r{transform:translateX(40px)}
+    .reveal.in,.reveal-l.in,.reveal-r.in{opacity:1;transform:none}
+
+    /* ═══ NAVBAR ═══ */
+    nav#navbar{
+      position:fixed;top:0;left:0;right:0;z-index:500;height:66px;
+      display:flex;align-items:center;justify-content:space-between;padding:0 5vw;
+      background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+      border-bottom:1px solid transparent;
+      transition:border-color var(--tr),box-shadow var(--tr);
+    }
+    nav#navbar.scrolled{border-color:var(--border);box-shadow:0 2px 20px rgba(79,93,97,.08)}
+    .nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;color:var(--primary);white-space:nowrap}
+    .nav-logo-box{width:34px;height:34px;background:var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+    .nav-links{display:flex;align-items:center;gap:26px;list-style:none}
+    .nav-links a{font-size:.9rem;font-weight:500;color:var(--muted);position:relative;padding-bottom:2px;transition:color var(--tr)}
+    .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--accent2);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform var(--tr)}
+    .nav-links a:hover,.nav-links a.active{color:var(--primary)}
+    .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+    .nav-cta{background:var(--accent2)!important;color:#fff!important;padding:8px 18px;border-radius:8px;font-weight:700!important;transition:background var(--tr),transform var(--tr),box-shadow var(--tr)!important}
+    .nav-cta:hover{background:var(--accent2-d)!important;transform:translateY(-1px)!important;box-shadow:0 4px 16px rgba(255,110,53,.3)!important}
+    .nav-cta::after{display:none!important}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--primary);border-radius:2px;transition:transform .3s,opacity .3s}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    .mob-menu{display:none;position:fixed;top:66px;left:0;right:0;z-index:499;background:#fff;border-bottom:1px solid var(--border);padding:12px 5vw 20px;flex-direction:column;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+    .mob-menu.open{display:flex}
+    .mob-menu a{padding:11px 0;font-size:1rem;font-weight:500;color:var(--muted);border-bottom:1px solid var(--border);transition:color var(--tr)}
+    .mob-menu a:last-child{border:none;color:var(--accent2);font-weight:700}
+    .mob-menu a:hover{color:var(--primary)}
+
+    /* ═══ HERO ═══ */
+    .hero{min-height:100svh;position:relative;overflow:hidden;background:linear-gradient(140deg,#26333a 0%,#4F5D61 60%,#3a5259 100%);display:flex;align-items:center;padding-top:66px}
+    .hero-bg{position:absolute;inset:0;opacity:.05;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:30px 30px;animation:bgDrift 24s linear infinite}
+    @keyframes bgDrift{to{background-position:60px 60px}}
+    .glow1,.glow2{position:absolute;border-radius:50%;pointer-events:none}
+    .glow1{width:560px;height:560px;top:-120px;right:-80px;background:radial-gradient(circle,rgba(255,110,53,.18) 0%,transparent 70%);animation:glowD 10s ease-in-out infinite}
+    .glow2{width:380px;height:380px;bottom:-60px;left:-60px;background:radial-gradient(circle,rgba(153,179,182,.2) 0%,transparent 70%);animation:glowD 13s ease-in-out infinite reverse}
+    @keyframes glowD{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-24px)}}
+    .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;max-width:1200px;margin:0 auto;padding:80px 5vw 100px;width:100%}
+    .hero-text{color:#fff}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:6px 16px;font-size:.78rem;font-weight:600;color:var(--accent1);margin-bottom:22px;opacity:0;animation:fadeUp .6s ease .2s forwards}
+    .hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);animation:dotPulse 1.6s ease infinite}
+    @keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.5}}
+    .hero-h1{font-size:clamp(2rem,4.5vw,3.6rem);font-weight:800;line-height:1.12;margin-bottom:18px;opacity:0;animation:fadeUp .6s ease .4s forwards}
+    .hero-h1 span{color:var(--accent2)}
+    .hero-p{font-size:1.02rem;line-height:1.72;color:rgba(255,255,255,.72);max-width:460px;margin-bottom:34px;opacity:0;animation:fadeUp .6s ease .6s forwards}
+    .hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadeUp .6s ease .8s forwards}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+    .btn-solid{display:inline-flex;align-items:center;gap:8px;background:var(--accent2);color:#fff;padding:13px 26px;border-radius:10px;font-weight:600;font-size:.93rem;border:2px solid transparent;transition:all var(--tr)}
+    .btn-solid:hover{background:var(--accent2-d);transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,110,53,.35)}
+    .btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:13px 26px;border-radius:10px;font-weight:600;font-size:.93rem;border:2px solid rgba(255,255,255,.28);transition:all var(--tr)}
+    .btn-ghost:hover{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.07);transform:translateY(-2px)}
+    .hero-photo{display:flex;justify-content:center;opacity:0;transform:scale(.9) translateY(20px);animation:heroImg .9s cubic-bezier(.34,1.56,.64,1) .5s forwards}
+    @keyframes heroImg{to{opacity:1;transform:none}}
+    .photo-card{position:relative;width:320px;max-width:90vw;border-radius:26px;overflow:hidden;box-shadow:0 28px 80px rgba(0,0,0,.45)}
+    .photo-card img{width:100%;aspect-ratio:4/5;object-fit:cover}
+    .photo-badge{position:absolute;bottom:18px;left:14px;right:14px;background:rgba(255,255,255,.13);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;color:#fff}
+    .photo-badge-em{font-size:1.6rem}
+    .photo-badge-name{font-size:.88rem;font-weight:700}
+    .photo-badge-role{font-size:.72rem;opacity:.65}
+    .scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;color:rgba(255,255,255,.35);font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;opacity:0;animation:fadeIn 1s ease 2s forwards}
+    @keyframes fadeIn{to{opacity:1}}
+    .scroll-hint i{animation:bounce 1.5s ease infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+    /* ═══ ОБЩИЕ СЕКЦИИ ═══ */
+    section{padding:96px 5vw}
+    .container{max-width:1200px;margin:0 auto}
+    .sec-tag{display:inline-flex;align-items:center;gap:7px;background:#eef2f3;border-radius:99px;padding:5px 14px;font-size:.75rem;font-weight:700;color:var(--primary);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+    .sec-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);flex-shrink:0}
+    .sec-title{font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:800;color:var(--primary);line-height:1.18;margin-bottom:12px}
+    .sec-title span{color:var(--accent2)}
+    .sec-sub{font-size:1rem;color:var(--muted);max-width:500px;line-height:1.72}
+    .divider{width:52px;height:4px;background:var(--accent2);border-radius:4px;margin:18px 0 30px}
+
+    /* ═══ О СЕБЕ ═══ */
+    #about{background:var(--bg2)}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+    .about-img-wrap{position:relative;padding:0 20px 20px 0}
+    .about-img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)}
+    .about-text h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;color:var(--primary);margin-bottom:14px}
+    .about-text h2 span{color:var(--accent2)}
+    .about-text p{color:var(--muted);line-height:1.8;margin-bottom:14px;font-size:.96rem}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+    .chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:.82rem;font-weight:600;color:var(--primary);transition:all var(--tr)}
+    .chip:hover{border-color:var(--accent1);background:#f0f6f7;transform:translateY(-2px);box-shadow:var(--shadow)}
+    .chip i{color:var(--accent2);font-size:.7rem}
+
+    /* ═══ УСЛУГИ ═══ */
+    #services{background:var(--bg)}
+    .srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:22px;margin-top:48px}
+    .srv-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:30px 26px;position:relative;overflow:hidden;transition:all var(--tr)}
+    .srv-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent1));transform:scaleX(0);transform-origin:left;transition:transform var(--tr)}
+    .srv-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--accent1)}
+    .srv-card:hover::after{transform:scaleX(1)}
+    .srv-icon{width:52px;height:52px;border-radius:12px;background:#f0f4f4;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:16px;transition:background var(--tr)}
+    .srv-card:hover .srv-icon{background:#fff0e8}
+    .srv-title{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:8px}
+    .srv-desc{font-size:.87rem;color:var(--muted);line-height:1.65}
+    .srv-price{margin-top:16px;font-size:.82rem;font-weight:700;color:var(--accent2)}
+
+    /* ═══ ГАЛЕРЕЯ ═══ */
+    #gallery{background:var(--bg2)}
+    .gallery-top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:20px}
+    .gallery-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .gallery-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+    .fbtn{padding:7px 16px;border-radius:8px;border:1.5px solid var(--border);font-family:inherit;font-size:.84rem;font-weight:600;color:var(--muted);background:#fff;transition:all var(--tr)}
+    .fbtn.active,.fbtn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .editor-panel{display:none;gap:10px;align-items:center;flex-wrap:wrap}
+    .editor-panel.visible{display:flex}
+    .btn-add-photo{display:inline-flex;align-items:center;gap:8px;background:var(--accent2);color:#fff;padding:9px 18px;border-radius:9px;font-family:inherit;font-size:.85rem;font-weight:700;border:none;transition:all var(--tr)}
+    .btn-add-photo:hover{background:var(--accent2-d);transform:translateY(-1px);box-shadow:0 6px 18px rgba(255,110,53,.3)}
+    .btn-save-now{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--primary);padding:9px 16px;border-radius:9px;font-family:inherit;font-size:.82rem;font-weight:700;border:1.5px solid var(--border);transition:all var(--tr)}
+    .btn-save-now:hover{border-color:var(--primary);background:#f0f4f4}
+    .btn-logout{background:none;border:1.5px solid #f87171;color:#dc2626;padding:8px 14px;border-radius:9px;font-family:inherit;font-size:.8rem;font-weight:700;transition:all var(--tr)}
+    .btn-logout:hover{background:#fee2e2}
+    .btn-login-hint{display:inline-flex;align-items:center;gap:6px;background:none;border:1.5px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:9px;font-family:inherit;font-size:.82rem;font-weight:600;transition:all var(--tr)}
+    .btn-login-hint:hover{border-color:var(--primary);color:var(--primary)}
+
+    /* Дропзона */
+    .upload-zone{display:none;margin-bottom:24px;border:2px dashed var(--accent1);border-radius:var(--radius-lg);padding:32px 24px;text-align:center;background:#f6fafa;transition:all var(--tr);cursor:pointer}
+    .upload-zone.visible{display:block}
+    .upload-zone.drag{border-color:var(--accent2);background:#fff4ee}
+    .upload-zone i{font-size:2rem;color:var(--accent1);margin-bottom:10px;display:block}
+    .upload-zone p{color:var(--muted);font-size:.88rem;margin-bottom:6px}
+    .upload-zone span{font-weight:700;color:var(--primary)}
+    #fileInput{display:none}
+    .upload-meta{display:none;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+    .upload-meta.show{display:flex}
+    .u-inp{font-family:inherit;font-size:.88rem;padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;outline:none;flex:1;min-width:140px;transition:border-color var(--tr)}
+    .u-inp:focus{border-color:var(--accent1)}
+    .u-sel{font-family:inherit;font-size:.88rem;padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;outline:none;background:#fff;color:var(--text);transition:border-color var(--tr)}
+    .u-sel:focus{border-color:var(--accent1)}
+    .u-confirm{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:inherit;font-size:.88rem;font-weight:700;transition:all var(--tr)}
+    .u-confirm:hover{background:var(--primary-d)}
+    .idb-progress{display:none;align-items:center;gap:10px;margin-top:14px;padding:10px 16px;background:#f0f6f7;border-radius:10px}
+    .idb-progress.show{display:flex}
+    .idb-progress-bar{flex:1;height:4px;background:#dde6e7;border-radius:4px;overflow:hidden}
+    .idb-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));border-radius:4px;width:0;transition:width .3s ease}
+    .idb-progress-text{font-size:.78rem;font-weight:700;color:var(--primary);white-space:nowrap}
+
+    /* Сетка */
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .g-item{aspect-ratio:1;border-radius:var(--radius);overflow:hidden;position:relative;box-shadow:0 2px 12px rgba(0,0,0,.07);transition:all var(--tr)}
+    .g-item.wide{grid-column:span 2;aspect-ratio:16/9}
+    .g-item.hidden{display:none!important}
+    .g-item:hover{transform:scale(1.015);box-shadow:var(--shadow-lg)}
+    .g-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+    .g-item:hover img{transform:scale(1.07)}
+    .g-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(79,93,97,.85) 0%,transparent 60%);opacity:0;transition:opacity var(--tr);display:flex;align-items:flex-end;padding:16px;gap:8px}
+    .g-item:hover .g-overlay{opacity:1}
+    .g-overlay-text{flex:1;color:#fff}
+    .g-overlay-text h4{font-size:.93rem;font-weight:700}
+    .g-overlay-text span{font-size:.76rem;opacity:.72}
+    .g-del-btn{background:rgba(220,38,38,.85);color:#fff;border:none;border-radius:7px;width:32px;height:32px;display:none;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;align-self:flex-end;transition:background var(--tr)}
+    .g-del-btn:hover{background:rgba(185,28,28,.95)}
+    body.editor-mode .g-del-btn{display:flex}
+    .g-item[data-custom="false"] .g-del-btn{display:none!important}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.93);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+    .lightbox.open{display:flex}
+    .lb-img{max-width:90vw;max-height:88vh;border-radius:14px;box-shadow:0 24px 80px rgba(0,0,0,.5);user-select:none}
+    .lb-close{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:background var(--tr)}
+    .lb-close:hover{background:rgba(255,255,255,.25)}
+
+    /* ═══ ОТЗЫВЫ ═══ */
+    #testimonials{background:var(--bg)}
+    .tst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px;margin-top:48px}
+    .tst-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:26px;transition:all var(--tr)}
+    .tst-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--accent1)}
+    .tst-quote{font-size:2.4rem;color:var(--accent1);line-height:1}
+    .stars{color:var(--accent2);font-size:.82rem;margin:8px 0}
+    .tst-text{font-size:.91rem;color:var(--muted);line-height:1.75;font-style:italic;margin-bottom:18px}
+    .tst-author{display:flex;align-items:center;gap:12px}
+    .tst-av{width:44px;height:44px;border-radius:50%;background:var(--accent1);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:1.05rem;flex-shrink:0}
+    .tst-name{font-weight:700;font-size:.88rem;color:var(--primary)}
+    .tst-role{font-size:.76rem;color:var(--muted)}
+
+    /* ═══ ПУБЛИКАЦИИ ═══ */
+    #publications{background:var(--bg2)}
+    .pub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:26px;margin-top:48px}
+    .pub-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);border:1.5px solid var(--border);transition:all var(--tr)}
+    .pub-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+    .pub-img-wrap{overflow:hidden;height:200px}
+    .pub-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+    .pub-card:hover .pub-img{transform:scale(1.05)}
+    .pub-body{padding:22px}
+    .pub-lbl{display:inline-block;background:#fff4ee;color:var(--accent2);font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:5px;padding:3px 10px;margin-bottom:10px}
+    .pub-title{font-size:.98rem;font-weight:700;color:var(--primary);margin-bottom:8px;line-height:1.4}
+    .pub-desc{font-size:.86rem;color:var(--muted);line-height:1.65;margin-bottom:14px}
+    .pub-link{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;color:var(--accent2);transition:gap var(--tr)}
+    .pub-link:hover{gap:10px}
+    .pub-vid-wrap{height:200px;position:relative;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center}
+    .pub-vid-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .pub-vid-ov{position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background var(--tr)}
+    .pub-vid-ov:hover{background:rgba(0,0,0,.5)}
+    .play-btn{width:58px;height:58px;border-radius:50%;background:var(--accent2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;box-shadow:0 8px 28px rgba(255,110,53,.45);transition:transform var(--tr),box-shadow var(--tr)}
+    .pub-vid-ov:hover .play-btn{transform:scale(1.12)}
+    .urushi-facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:28px;margin-top:48px;background:linear-gradient(135deg,var(--primary) 0%,#3a5259 100%);border-radius:var(--radius-lg);padding:40px}
+    .uf-item{text-align:center;color:#fff}
+    .uf-num{font-size:2.2rem;font-weight:800;color:var(--accent2)}
+    .uf-txt{font-size:.83rem;opacity:.78;margin-top:6px;line-height:1.5}
+
+    /* ═══ КОНТАКТЫ ═══ */
+    #contact{background:var(--bg)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+    .contact-info h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:var(--primary);margin-bottom:12px}
+    .contact-info h2 span{color:var(--accent2)}
+    .contact-info>p{color:var(--muted);line-height:1.75;margin-bottom:30px}
+    .c-items{display:flex;flex-direction:column;gap:14px;margin-bottom:30px}
+    .c-item{display:flex;align-items:flex-start;gap:14px}
+    .c-icon{width:44px;height:44px;border-radius:10px;background:#f0f4f4;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--primary);flex-shrink:0;transition:all var(--tr)}
+    .c-item:hover .c-icon{background:var(--primary);color:#fff}
+    .c-label{font-size:.76rem;color:var(--muted)}
+    .c-val{font-weight:700;color:var(--primary);font-size:.9rem}
+    .c-val-sm{font-size:.82rem;opacity:.7;font-weight:500;color:var(--primary)}
+
+    /* Кнопки мессенджеров */
+    .socials{display:flex;gap:12px;flex-wrap:wrap}
+    .soc-btn{display:inline-flex;align-items:center;gap:9px;padding:12px 20px;border-radius:12px;font-family:inherit;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all var(--tr);white-space:nowrap;text-decoration:none}
+    .soc-btn-tg{background:linear-gradient(135deg,#229ED9,#1a7fb5);color:#fff;box-shadow:0 4px 16px rgba(34,158,217,.3)}
+    .soc-btn-tg:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(34,158,217,.45)}
+    .soc-btn-max{background:linear-gradient(135deg,#6B4EFF,#4f35db);color:#fff;box-shadow:0 4px 16px rgba(107,78,255,.3)}
+    .soc-btn-max:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(107,78,255,.45)}
+    .soc-btn i{font-size:1.1rem}
+    .max-svg{width:20px;height:20px;flex-shrink:0}
+
+    /* Форма */
+    .cform{display:flex;flex-direction:column;gap:16px}
+    .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .fg{display:flex;flex-direction:column;gap:5px}
+    .fl{font-size:.84rem;font-weight:700;color:var(--primary)}
+    .fi,.ft{font-family:inherit;font-size:.91rem;padding:12px 15px;border-radius:10px;border:1.5px solid var(--border);background:#fff;color:var(--text);outline:none;resize:none;transition:border-color var(--tr),box-shadow var(--tr)}
+    .fi:focus,.ft:focus{border-color:var(--accent1);box-shadow:0 0 0 3px rgba(153,179,182,.2)}
+    .fi.err,.ft.err{border-color:#f87171}
+    .ft{min-height:120px}
+    .fsub{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--primary);color:#fff;padding:14px 28px;border-radius:10px;font-family:inherit;font-size:.93rem;font-weight:700;border:none;transition:all var(--tr)}
+    .fsub:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,110,53,.3)}
+    .fsub:disabled{opacity:.65;cursor:not-allowed;transform:none}
+    .f-ok{display:none;padding:13px 18px;border-radius:10px;background:#ecfdf5;border:1.5px solid #6ee7b7;color:#065f46;font-size:.88rem;font-weight:600;text-align:center}
+    .f-ok.show{display:block}
+
+    /* ═══ FOOTER ═══ */
+    footer{background:var(--primary);color:#fff;padding:52px 5vw 28px}
+    .ft-inner{max-width:1200px;margin:0 auto}
+    .ft-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;margin-bottom:36px}
+    .ft-brand .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;margin-bottom:10px}
+    .ft-brand p{font-size:.86rem;opacity:.6;max-width:240px;line-height:1.6}
+    .ft-col h4{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;opacity:.9;margin-bottom:14px}
+    .ft-col ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+    .ft-col a{font-size:.86rem;opacity:.55;transition:opacity var(--tr)}
+    .ft-col a:hover{opacity:1}
+    .ft-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+    .ft-bottom p{font-size:.8rem;opacity:.45}
+
+    /* Scroll-to-top */
+    .stt{position:fixed;bottom:26px;right:26px;z-index:400;width:46px;height:46px;border-radius:12px;background:var(--accent2);color:#fff;border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(255,110,53,.35);opacity:0;visibility:hidden;transform:translateY(10px);transition:all var(--tr)}
+    .stt.show{opacity:1;visibility:visible;transform:none}
+    .stt:hover{background:var(--accent2-d);transform:translateY(-2px)}
+
+    /* Save toast */
+    .save-toast{position:fixed;bottom:84px;right:26px;z-index:600;background:var(--primary);color:#fff;padding:12px 18px;border-radius:12px;font-size:.85rem;font-weight:600;box-shadow:0 8px 28px rgba(79,93,97,.3);display:flex;align-items:center;gap:12px;opacity:0;visibility:hidden;transform:translateY(10px);transition:all var(--tr)}
+    .save-toast.show{opacity:1;visibility:visible;transform:none}
+    .save-toast-btn{background:var(--accent2);color:#fff;border:none;border-radius:7px;padding:5px 12px;font-family:inherit;font-size:.8rem;font-weight:700;transition:background var(--tr)}
+    .save-toast-btn:hover{background:var(--accent2-d)}
+
+    /* ═══ АДАПТИВ ═══ */
+    @media(max-width:920px){
+      .hero-inner{grid-template-columns:1fr;padding:56px 5vw 90px}
+      .hero-photo{order:-1}
+      .about-grid,.contact-grid{grid-template-columns:1fr;gap:36px}
+      .gallery-grid{grid-template-columns:repeat(2,1fr)}
+      .g-item.wide{grid-column:span 2}
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .tg-box{width:100%;border-radius:20px}
+      .socials{flex-direction:column}
+      .soc-btn{justify-content:center}
+    }
+    @media(max-width:600px){
+      section{padding:70px 5vw}
+      .gallery-grid{grid-template-columns:1fr}
+      .g-item.wide{grid-column:span 1;aspect-ratio:1}
+      .frow{grid-template-columns:1fr}
+      .pub-grid{grid-template-columns:1fr}
+      .urushi-facts{grid-template-columns:1fr 1fr;padding:24px;gap:20px}
+      .gallery-top{flex-direction:column;align-items:flex-start}
+      .gallery-controls{width:100%}
+      .editor-panel{flex-wrap:wrap;gap:8px}
+      .btn-add-photo,.btn-save-now,.btn-logout,.btn-login-hint{font-size:.78rem;padding:8px 12px}
+      .tg-body{padding:20px 16px}
+      .tg-header{padding:22px 20px 18px}
+      .save-toast{left:16px;right:16px;bottom:76px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ LOADER ═══ -->
+<div id="loader" role="status" aria-label="Загрузка">
+  <div class="ld-ring"><span class="ld-em">🪵</span></div>
+  <div class="ld-text">Мастерская дерева</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+</div>
+
+<!-- ═══ IDB STATUS ═══ -->
+<div class="idb-status" id="idbStatus">
+  <span class="idb-dot"></span>
+  <span id="idbStatusText">IndexedDB</span>
+</div>
+
+<!-- ═══ AUTH MODAL ═══ -->
+<div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-label="Вход редактора">
+  <div class="auth-box">
+    <div style="font-size:2rem;margin-bottom:12px">🔐</div>
+    <h3>Вход для редактора</h3>
+    <p>Введите пароль для управления галереей</p>
+    <input class="auth-inp" type="password" id="authPwd" placeholder="Пароль" autocomplete="current-password"/>
+    <div class="auth-err" id="authErr">Неверный пароль. Попробуйте ещё раз.</div>
+    <button class="auth-btn" id="authSubmit">Войти</button>
+    <button class="auth-cancel" id="authCancel">Отмена</button>
+  </div>
+</div>
+
+<!-- ═══ TELEGRAM MODAL ═══ -->
+<div class="tg-modal" id="tgModal" role="dialog" aria-modal="true" aria-label="Написать в Telegram">
+  <div class="tg-box">
+    <div class="tg-header">
+      <button class="tg-close-btn" id="tgClose" aria-label="Закрыть">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="tg-header-icon">✈️</div>
+      <h3>Написать в Telegram</h3>
+      <p>Откройте чат с мастером Сергеем прямо сейчас — отвечаю быстро!</p>
+    </div>
+    <div class="tg-body">
+      <div class="tg-phone-display">
+        <div class="ph-label">📱 Telegram мастера</div>
+        <div class="ph-num" id="tgPhoneDisplay">+7 (800) 500-00-00</div>
+      </div>
+      <label class="tg-msg-label" for="tgPreMsg">Ваше сообщение (необязательно)</label>
+      <textarea class="tg-msg-inp" id="tgPreMsg" rows="4"
+        placeholder="Здравствуйте! Хочу заказать пиалу с лаком Уруси..."></textarea>
+      <div class="tg-actions">
+        <button class="tg-btn-open" id="tgOpenApp">
+          <i class="fab fa-telegram"></i>
+          Открыть в Telegram
+        </button>
+        <a class="tg-btn-web" id="tgOpenWeb" href="#" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-globe"></i>
+          Открыть в браузере (веб)
+        </a>
+      </div>
+      <p class="tg-note">
+        💡 При нажатии откроется приложение Telegram.<br>
+        Если приложение не установлено — откроется веб-версия.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="nav-logo-box">🪵</div>
+    Сергей
+  </div>
+  <ul class="nav-links" role="navigation">
+    <li><a href="#about">О мастере</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#gallery">Галерея</a></li>
+    <li><a href="#testimonials">Отзывы</a></li>
+    <li><a href="#publications">Публикации</a></li>
+    <li><a href="#contact" class="nav-cta">Связаться</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<nav class="mob-menu" id="mobMenu" aria-label="Мобильное меню">
+  <a href="#about"        onclick="closeMob()">О мастере</a>
+  <a href="#services"     onclick="closeMob()">Услуги</a>
+  <a href="#gallery"      onclick="closeMob()">Галерея</a>
+  <a href="#testimonials" onclick="closeMob()">Отзывы</a>
+  <a href="#publications" onclick="closeMob()">Публикации</a>
+  <a href="#contact"      onclick="closeMob()">Связаться</a>
+</nav>
+
+
+<!-- ═══ О СЕБЕ ═══ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-l">
+      </div>
+      <div class="about-text reveal-r">
+        <div class="sec-tag">О себе</div>
+        <h2>Привет! Я <span>Сергей</span> —<br>мастер деревянных изделий</h2>
+        <div class="divider"></div>
+        <p>Работаю с деревом, создавая изделия, которые становятся частью интерьера и жизни людей. Начинал с классической мебели, теперь специализируюсь на токарном деле.</p>
+        <p>Мой особый интерес — японский лак «Уруси» (urushi). Этот природный материал придаёт пиалам и чашам особую глубину, прочность и неповторимую красоту. Каждое покрытие — 7–15 слоёв, нанесённых вручную.</p>
+        <p>Работаю с дубом, орехом, ясенем, вишней и экзотическими породами. Принимаю заказы на эксклюзивные изделия под ваш интерьер.</p>
+        <div class="chips">
+          <span class="chip"><i class="fas fa-circle"></i>Токарное дело</span>
+          <span class="chip"><i class="fas fa-circle"></i>Лак «Уруси»</span>
+          <span class="chip"><i class="fas fa-circle"></i>Авторский дизайн</span>
+          <span class="chip"><i class="fas fa-circle"></i>Дуб · Орех · Ясень</span>
+          <span class="chip"><i class="fas fa-circle"></i>Изделия под заказ</span>
+          <span class="chip"><i class="fas fa-circle"></i>Экзотические породы</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ УСЛУГИ ═══ -->
+<section id="services">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">Услуги</div>
+      <h2 class="sec-title">Что я <span>создаю</span></h2>
+      <p class="sec-sub">Все изделия — ручная работа под индивидуальный заказ из отборных пород дерева.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card reveal" style="transition-delay:.05s">
+        <div class="srv-icon">🏺</div>
+        <div class="srv-title">Вазы и кувшины</div>
+        <div class="srv-desc">Точёные вазы различных форм — от изящных узких до широких напольных. Дуб, ясень, орех, черёмуха.</div>
+        <div class="srv-price">от 3 500 ₽</div>
+      </div>
+      <div class="srv-card reveal" style="transition-delay:.1s">
+        <div class="srv-icon">🍵</div>
+        <div class="srv-title">Пиалы с лаком Уруси</div>
+        <div class="srv-desc">Пиалы с японским лаком «Уруси». Экологичны, долговечны, приобретают особую красоту с течением времени.</div>
+        <div class="srv-price">от 5 000 ₽</div>
+      </div>
+      <div class="srv-card reveal" style="transition-delay:.15s">
+        <div class="srv-icon">🕯️</div>
+        <div class="srv-title">Подсвечники</div>
+        <div class="srv-desc">Деревянные подсвечники — классические и авангардные, под свечи-столбики и чайные. Отличный подарок.</div>
+        <div class="srv-price">от 2 200 ₽</div>
+      </div>
+      <div class="srv-card reveal" style="transition-delay:.2s">
+        <div class="srv-icon">🪵</div>
+        <div class="srv-title">Декоративные объекты</div>
+        <div class="srv-desc">Скульптурные формы, деревянные шары, яйца, абстрактные объекты — украшения интерьера с характером.</div>
+        <div class="srv-price">от 1 800 ₽</div>
+      </div>
+      <div class="srv-card reveal" style="transition-delay:.25s">
+        <div class="srv-icon">🍽️</div>
+        <div class="srv-title">Посуда и тарелки</div>
+        <div class="srv-desc">Деревянные тарелки, блюда, менажницы из цельных чурбаков. Покрытие пищевым маслом.</div>
+        <div class="srv-price">от 2 800 ₽</div>
+      </div>
+      <div class="srv-card reveal" style="transition-delay:.3s">
+        <div class="srv-icon">🎁</div>
+        <div class="srv-title">Подарочные наборы</div>
+        <div class="srv-desc">Комплекты в деревянной упаковке: пиала + подставка, ваза + подсвечник, авторские наборы.</div>
+        <div class="srv-price">от 6 500 ₽</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ГАЛЕРЕЯ ═══ -->
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-top reveal">
+      <div>
+        <div class="sec-tag">Галерея</div>
+        <h2 class="sec-title" style="margin-top:10px">Мои <span>работы</span></h2>
+        <p class="sec-sub">Кликните на фото для увеличения.</p>
+      </div>
+      <div class="gallery-controls">
+        <button class="btn-login-hint" id="btnLoginHint">
+          <i class="fas fa-lock"></i>Редактор
+        </button>
+        <div class="editor-panel" id="editorPanel">
+          <button class="btn-add-photo" id="btnToggleUpload">
+            <i class="fas fa-plus"></i>Добавить фото
+          </button>
+          <button class="btn-save-now" id="btnSaveNow">
+            <i class="fas fa-save"></i>Сохранить
+          </button>
+          <button class="btn-logout" id="btnLogout">
+            <i class="fas fa-sign-out-alt"></i>Выйти
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Зона загрузки -->
+    <div class="upload-zone" id="uploadZone" role="button" tabindex="0" aria-label="Загрузить фото">
+      <i class="fas fa-cloud-upload-alt"></i>
+      <p><span>Нажмите здесь</span> или перетащите фотографию</p>
+      <p style="font-size:.76rem;color:#aaa;margin-top:4px">JPG, PNG, WebP · IndexedDB позволяет хранить большие файлы</p>
+      <input type="file" id="fileInput" accept="image/*" multiple/>
+      <div class="upload-meta" id="uploadMeta">
+        <input type="text" class="u-inp" id="uName" placeholder="Название изделия"/>
+        <select class="u-sel" id="uCat">
+          <option value="decor">— Категория —</option>
+          <option value="vases">Вазы</option>
+          <option value="bowls">Пиалы</option>
+          <option value="candles">Подсвечники</option>
+          <option value="decor">Декор</option>
+        </select>
+        <button class="u-confirm" id="uConfirm">Добавить</button>
+      </div>
+      <!-- Прогресс загрузки в IDB -->
+      <div class="idb-progress" id="idbProgress">
+        <div class="idb-progress-bar"><div class="idb-progress-fill" id="idbProgressFill"></div></div>
+        <span class="idb-progress-text" id="idbProgressText">Сохранение...</span>
+      </div>
+    </div>
+
+    <!-- Фильтры -->
+    <div class="gallery-filters reveal">
+      <button class="fbtn active" data-filter="all">Все работы</button>
+      <button class="fbtn" data-filter="vases">Вазы</button>
+      <button class="fbtn" data-filter="bowls">Пиалы</button>
+      <button class="fbtn" data-filter="candles">Подсвечники</button>
+      <button class="fbtn" data-filter="decor">Декор</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фото">
+  <button class="lb-close" id="lbClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
+  <img class="lb-img" id="lbImg" src="" alt=""/>
+</div>
+
+<!-- Save toast -->
+<div class="save-toast" id="saveToast">
+  <span>💾 Несохранённые изменения</span>
+  <button class="save-toast-btn" id="toastSaveBtn">Сохранить</button>
+</div>
+
+<!-- ═══ ОТЗЫВЫ ═══ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="sec-tag" style="display:inline-flex">Отзывы</div>
+      <h2 class="sec-title" style="margin-top:12px">Что говорят <span>клиенты</span></h2>
+      <p class="sec-sub" style="margin:0 auto">Довольные клиенты по всей России.</p>
+    </div>
+    <div class="tst-grid">
+      <div class="tst-card reveal" style="transition-delay:.05s">
+        <div class="tst-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="tst-text">Заказывала пиалы с лаком Уруси в подарок маме. Сергей сделал всё точно по пожеланиям — форма, размер, оттенок. Мама в восторге! Качество выше всяких похвал.</p>
+        <div class="tst-author">
+          <div class="tst-av">М</div>
+          <div><div class="tst-name">Мария Коваленко</div><div class="tst-role">Дизайнер интерьеров, Москва</div></div>
+        </div>
+      </div>
+      <div class="tst-card reveal" style="transition-delay:.1s">
+        <div class="tst-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="tst-text">Брал набор подсвечников для гостиной. Смотрятся фантастически — живые, тёплые. Уже несколько друзей спросили, где взял. Порекомендовал всем!</p>
+        <div class="tst-author">
+          <div class="tst-av">А</div>
+          <div><div class="tst-name">Алексей Рымарь</div><div class="tst-role">Предприниматель, Санкт-Петербург</div></div>
+        </div>
+      </div>
+      <div class="tst-card reveal" style="transition-delay:.15s">
+        <div class="tst-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="tst-text">Сергей изготовил вазы под концепцию японского минимализма. Сроки соблюдены, общение приятное, результат превзошёл ожидания. Будем заказывать ещё!</p>
+        <div class="tst-author">
+          <div class="tst-av">Е</div>
+          <div><div class="tst-name">Екатерина Шевченко</div><div class="tst-role">Владелец салона декора, Казань</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ПУБЛИКАЦИИ ═══ -->
+<section id="publications">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">Публикации</div>
+      <h2 class="sec-title">Материалы и <span>технологии</span></h2>
+      <p class="sec-sub">Читайте о технологиях, которые я использую — прежде всего о японском лаке «Уруси».</p>
+    </div>
+    <div class="pub-grid">
+      <div class="pub-card reveal" style="transition-delay:.05s">
+        <div class="pub-img-wrap">
+          <img class="pub-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=700&q=80" alt="Японский лак Уруси" loading="lazy"/>
+        </div>
+        <div class="pub-body">
+          <span class="pub-lbl">Технология</span>
+          <h3 class="pub-title">Японский лак «Уруси»: 7000 лет природного совершенства</h3>
+          <p class="pub-desc">Уруси — природный лак из сока лакового дерева. Придаёт глубину, прочность и антибактериальные свойства. 7–15 слоёв вручную.</p>
+          <a class="pub-link" href="https://japanobjects.com/features/guide-to-masterpieces-of-japanese-lacquer" target="_blank" rel="noopener noreferrer">Читать подробнее <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="pub-card reveal" style="transition-delay:.1s">
+        <div class="pub-img-wrap">
+          <img class="pub-img" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=700&q=80" alt="Токарная обработка" loading="lazy"/>
+        </div>
+        <div class="pub-body">
+          <span class="pub-lbl">Мастерство</span>
+          <h3 class="pub-title">Токарная обработка: как рождается форма</h3>
+          <p class="pub-desc">О процессе создания пиалы — от выбора заготовки до финальной полировки. Почему порода дерева имеет значение.</p>
+          <a class="pub-link" href="#contact">Задать вопрос <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="pub-card reveal" style="transition-delay:.15s">
+        <div class="pub-vid-wrap" id="vidWrap">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Превью видео" loading="lazy"/>
+          <div class="pub-vid-ov" id="vidOv" role="button" tabindex="0" aria-label="Воспроизвести видео">
+            <div class="play-btn"><i class="fas fa-play"></i></div>
+          </div>
+        </div>
+        <div class="pub-body">
+          <span class="pub-lbl">Видео</span>
+          <h3 class="pub-title">Изготовление пиалы с покрытием Уруси — весь процесс</h3>
+          <p class="pub-desc">Как пиала превращается из чурбака в готовое изделие: точение, шлифовка, нанесение лака Уруси слой за слоем.</p>
+          <a class="pub-link" href="https://www.youtube.com/results?search_query=urushi+lacquer+bowl+woodturning" target="_blank" rel="noopener noreferrer">Смотреть на YouTube <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="urushi-facts reveal">
+      <div class="uf-item"><div class="uf-num">7 000+</div><div class="uf-txt">лет использования Уруси в Японии</div></div>
+      <div class="uf-item"><div class="uf-num">7–15</div><div class="uf-txt">слоёв лака на каждое изделие</div></div>
+      <div class="uf-item"><div class="uf-num">100%</div><div class="uf-txt">натуральный пищевой материал</div></div>
+      <div class="uf-item"><div class="uf-num">∞</div><div class="uf-txt">срок службы при правильном уходе</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ КОНТАКТЫ ═══ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal-l">
+        <div class="sec-tag">Контакты</div>
+        <h2 style="margin-top:12px">Обсудим ваш <span style="color:var(--accent2)">проект</span></h2>
+        <div class="divider"></div>
+        <p>Расскажите о своей идее — помогу воплотить её в дереве. Отвечаю в течение 24 часов. Работаю по всей России.</p>
+        <div class="c-items">
+          <div class="c-item">
+            <div class="c-icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <div class="c-label">Телефон</div>
+              <div class="c-val">+7 (950) 724-30-86</div>
+              <div class="c-val-sm">+7 (950) 725-86-26</div>
+            </div>
+          </div>
+          <div class="c-item">
+            <div class="c-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="c-label">Email</div>
+              <div class="c-val">сюда поставить акутальную почту.ru</div>
+            </div>
+          </div>
+          <div class="c-item">
+            <div class="c-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div class="c-label">Местоположение</div>
+              <div class="c-val">Челябинск</div>
+            </div>
+          </div>
+          
+        <!-- Кнопки мессенджеров -->
+        <div class="socials">
+          <!-- Telegram — открывает модальное окно -->
+          <button class="soc-btn soc-btn-tg" id="btnTelegram" aria-label="Написать в Telegram">
+            <i class="fab fa-telegram"></i>Telegram
+          </button>
+          <!-- Макс — прямая ссылка -->
+          <a class="soc-btn soc-btn-max" href="https://max.ru" target="_blank" rel="noopener noreferrer" aria-label="Написать в Макс">
+            <svg class="max-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            Макс
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal-r">
+        <form class="cform" id="cform" novalidate>
+          <div class="frow">
+            <div class="fg">
+              <label class="fl" for="fname">Ваше имя *</label>
+              <input class="fi" type="text" id="fname" name="name" placeholder="Иван Иванов" required autocomplete="name"/>
+            </div>
+            <div class="fg">
+              <label class="fl" for="fphone">Телефон</label>
+              <input class="fi" type="tel" id="fphone" name="phone" placeholder="+7 (999) 000-00-00" autocomplete="tel"/>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="fl" for="femail">Email *</label>
+            <input class="fi" type="email" id="femail" name="email" placeholder="your@email.ru" required autocomplete="email"/>
+          </div>
+          <div class="fg">
+            <label class="fl" for="fsubj">Что вас интересует?</label>
+            <input class="fi" type="text" id="fsubj" name="subject" placeholder="Пиала с лаком Уруси, подарочный набор..."/>
+          </div>
+          <div class="fg">
+            <label class="fl" for="fmsg">Сообщение *</label>
+            <textarea class="ft" id="fmsg" name="message" required placeholder="Расскажите о заказе: размер, порода дерева, бюджет..."></textarea>
+          </div>
+          <button type="submit" class="fsub" id="fsub">
+            <i class="fas fa-paper-plane"></i>Отправить сообщение
+          </button>
+          <div class="f-ok" id="fok">✅ Спасибо! Сергей свяжется с вами в течение 24 часов.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="logo">🪵 Сергей</div>
+        <p>Мастерская деревянных изделий ручной работы с душой и мастерством.</p>
+      </div>
+      <div class="ft-col">
+        <h4>Навигация</h4>
+        <ul>
+          <li><a href="#about">О мастере</a></li>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#gallery">Галерея</a></li>
+          <li><a href="#testimonials">Отзывы</a></li>
+          <li><a href="#publications">Публикации</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="#services">Вазы и кувшины</a></li>
+          <li><a href="#services">Пиалы с Уруси</a></li>
+          <li><a href="#services">Подсвечники</a></li>
+          <li><a href="#services">Декор</a></li>
+          <li><a href="#contact">Заказать</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Связь</h4>
+        <ul>
+          <li><a href="#" onclick="openTgModal();return false">Telegram</a></li>
+          <li><a href="https://max.ru" target="_blank" rel="noopener">Макс</a></li>
+          <li><a href="#contact">Написать письмо</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>© 2025 Сергей · Мастерская деревянных изделий</p>
+      <p>Сделано с ❤️ и деревом</p>
+    </div>
+  </div>
+</footer>
+
+<button class="stt" id="stt" aria-label="Наверх"><i class="fas fa-chevron-up"></i></button>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════
+   КОНФИГУРАЦИЯ — замените на свои данные
+═══════════════════════════════════════════ */
+const CFG = {
+  EDITOR_PASSWORD : 'master2025',          // ← смените пароль
+  PHONE_MAIN      : '+78005000000',        // ← основной номер (без пробелов, для t.me)
+  PHONE_DISPLAY   : '+7 (800) 500-00-00',  // ← для отображения в модалке
+  IDB_NAME        : 'WoodGalleryDB',
+  IDB_VERSION     : 2,
+  IDB_STORE       : 'photos',
+  META_STORE      : 'meta',
+};
+
+
+/* ═══════════════════════════════════════════
+   СОСТОЯНИЕ
+═══════════════════════════════════════════ */
+let db          = null;   // IndexedDB instance
+let isEditor    = false;
+let hasUnsaved  = false;
+let pendingFiles= [];
+let activeFilter= 'all';
+let customItems = [];     // метаданные пользовательских фото
+
+/* ═══════════════════════════════════════════
+   1. LOADER
+═══════════════════════════════════════════ */
+{
+  const loader = document.getElementById('loader');
+  let domOk=false, timerOk=false;
+  const tryHide=()=>{ if(domOk&&timerOk) loader.classList.add('hidden'); };
+  document.addEventListener('DOMContentLoaded',()=>{ domOk=true; tryHide(); });
+  setTimeout(()=>{ timerOk=true; tryHide(); }, 1800);
+}
+
+/* ═══════════════════════════════════════════
+   2. IndexedDB — инициализация
+═══════════════════════════════════════════ */
+function initIDB() {
+  return new Promise((resolve, reject) => {
+    if (!window.indexedDB) {
+      console.warn('IndexedDB не поддерживается');
+      resolve(null); return;
+    }
+    const req = indexedDB.open(CFG.IDB_NAME, CFG.IDB_VERSION);
+
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      // Хранилище двоичных данных фото
+      if (!d.objectStoreNames.contains(CFG.IDB_STORE)) {
+        const store = d.createObjectStore(CFG.IDB_STORE, {keyPath:'id'});
+        store.createIndex('cat','cat',{unique:false});
+      }
+      // Хранилище метаданных
+      if (!d.objectStoreNames.contains(CFG.META_STORE)) {
+        d.createObjectStore(CFG.META_STORE, {keyPath:'key'});
+      }
+    };
+
+    req.onsuccess = e => {
+      db = e.target.result;
+      db.onerror = ev => console.error('IDB error:', ev.target.error);
+      showIdbStatus('IndexedDB подключена ✓');
+      resolve(db);
+    };
+
+    req.onerror = e => {
+      console.error('IDB open error:', e.target.error);
+      showIdbStatus('Ошибка IDB — режим памяти', true);
+      resolve(null);
+    };
+  });
+}
+
+function showIdbStatus(msg, isErr=false) {
+  const el  = document.getElementById('idbStatus');
+  const txt = document.getElementById('idbStatusText');
+  const dot = el.querySelector('.idb-dot');
+  txt.textContent = msg;
+  if (isErr) { dot.style.background='#f87171'; }
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 3000);
+}
+
+/* ─── IDB операции ─── */
+function idbPut(store, value) {
+  return new Promise((resolve, reject) => {
+    if (!db) { resolve(); return; }
+    const tx  = db.transaction(store, 'readwrite');
+    const req = tx.objectStore(store).put(value);
+    req.onsuccess = ()=>resolve(req.result);
+    req.onerror   = ()=>reject(req.error);
+  });
+}
+
+function idbGet(store, key) {
+  return new Promise((resolve, reject) => {
+    if (!db) { resolve(null); return; }
+    const tx  = db.transaction(store, 'readonly');
+    const req = tx.objectStore(store).get(key);
+    req.onsuccess = ()=>resolve(req.result);
+    req.onerror   = ()=>reject(req.error);
+  });
+}
+
+function idbGetAll(store) {
+  return new Promise((resolve, reject) => {
+    if (!db) { resolve([]); return; }
+    const tx  = db.transaction(store, 'readonly');
+    const req = tx.objectStore(store).getAll();
+    req.onsuccess = ()=>resolve(req.result || []);
+    req.onerror   = ()=>reject(req.error);
+  });
+}
+
+function idbDelete(store, key) {
+  return new Promise((resolve, reject) => {
+    if (!db) { resolve(); return; }
+    const tx  = db.transaction(store, 'readwrite');
+    const req = tx.objectStore(store).delete(key);
+    req.onsuccess = ()=>resolve();
+    req.onerror   = ()=>reject(req.error);
+  });
+}
+
+/* Загрузить пользовательские фото из IDB */
+async function loadCustomFromIDB() {
+  try {
+    const [metaArr, photosArr] = await Promise.all([
+      idbGetAll(CFG.META_STORE),
+      idbGetAll(CFG.IDB_STORE)
+    ]);
+
+    // Восстанавливаем метаданные
+    const metaRecord = metaArr.find(m=>m.key==='customItems');
+    const meta = metaRecord ? metaRecord.value : [];
+
+    // Для каждого мета-элемента получаем blob/base64 из photo-store
+    const photosMap = {};
+    photosArr.forEach(p=>{ photosMap[p.id]=p; });
+
+    customItems = meta.map(item=>{
+      const photoRec = photosMap[item.id];
+      if (photoRec && photoRec.blob) {
+        // Конвертируем Blob в ObjectURL
+        item.src = URL.createObjectURL(photoRec.blob);
+        item.objectUrl = item.src;
+      }
+      return item;
+    }).filter(item=>item.src);
+
+  } catch(e) {
+    console.error('Ошибка загрузки из IDB:', e);
+    customItems = [];
+  }
+}
+
+/* Сохранить метаданные в IDB */
+async function saveMetaToIDB() {
+  const metaOnly = customItems.map(({objectUrl, src, ...rest})=>rest); // не сохраняем ObjectURL
+  await idbPut(CFG.META_STORE, {key:'customItems', value: metaOnly});
+}
+
+/* ═══════════════════════════════════════════
+   3. NAVBAR
+═══════════════════════════════════════════ */
+const navbar= document.getElementById('navbar');
+const sttBtn= document.getElementById('stt');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled', window.scrollY>30);
+  sttBtn.classList.toggle('show', window.scrollY>400);
+  updateNavActive();
+},{passive:true});
+sttBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ═══════════════════════════════════════════
+   4. HAMBURGER
+═══════════════════════════════════════════ */
+const hamburger= document.getElementById('hamburger');
+const mobMenu  = document.getElementById('mobMenu');
+hamburger.addEventListener('click',()=>{
+  const open= mobMenu.classList.toggle('open');
+  hamburger.classList.toggle('open',open);
+  hamburger.setAttribute('aria-expanded',open);
+});
+function closeMob(){
+  mobMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded','false');
+}
+document.addEventListener('click',e=>{
+  if(!navbar.contains(e.target)&&!mobMenu.contains(e.target)) closeMob();
+});
+
+/* ═══════════════════════════════════════════
+   5. SCROLL REVEAL
+═══════════════════════════════════════════ */
+const revObs= new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      const d= parseFloat(en.target.style.transitionDelay)*1000||0;
+      setTimeout(()=>en.target.classList.add('in'),d);
+      revObs.unobserve(en.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>revObs.observe(el));
+
+/* ═══════════════════════════════════════════
+   6. АКТИВНАЯ ССЫЛКА
+═══════════════════════════════════════════ */
+const sections= document.querySelectorAll('section[id]');
+const navLinks= document.querySelectorAll('.nav-links a');
+function updateNavActive(){
+  let cur='';
+  sections.forEach(s=>{ if(window.scrollY>=s.offsetTop-100) cur=s.id; });
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+}
+
+/* ═══════════════════════════════════════════
+   7. AUTH
+═══════════════════════════════════════════ */
+const authModal = document.getElementById('authModal');
+const authPwd   = document.getElementById('authPwd');
+const authErr   = document.getElementById('authErr');
+
+document.getElementById('btnLoginHint').addEventListener('click', openAuth);
+document.getElementById('authCancel').addEventListener('click', closeAuth);
+authModal.addEventListener('click',e=>{ if(e.target===authModal) closeAuth(); });
+document.getElementById('authSubmit').addEventListener('click', tryLogin);
+authPwd.addEventListener('keydown',e=>{ if(e.key==='Enter') tryLogin(); });
+
+function openAuth(){
+  authPwd.value=''; authErr.classList.remove('show'); authPwd.classList.remove('err');
+  authModal.classList.add('open'); document.body.style.overflow='hidden';
+  setTimeout(()=>authPwd.focus(),100);
+}
+function closeAuth(){ authModal.classList.remove('open'); document.body.style.overflow=''; }
+function tryLogin(){
+  if(authPwd.value===CFG.EDITOR_PASSWORD){
+    closeAuth(); setEditorMode(true);
+  } else {
+    authPwd.classList.add('err'); authErr.classList.add('show');
+    authPwd.value=''; authPwd.focus();
+  }
+}
+
+/* ═══════════════════════════════════════════
+   8. РЕЖИМ РЕДАКТОРА
+═══════════════════════════════════════════ */
+const editorPanel    = document.getElementById('editorPanel');
+const btnLoginHint   = document.getElementById('btnLoginHint');
+const btnToggleUpload= document.getElementById('btnToggleUpload');
+const uploadZone     = document.getElementById('uploadZone');
+const btnSaveNow     = document.getElementById('btnSaveNow');
+const btnLogout      = document.getElementById('btnLogout');
+
+function setEditorMode(on){
+  isEditor=on;
+  document.body.classList.toggle('editor-mode',on);
+  btnLoginHint.style.display = on?'none':'';
+  editorPanel.classList.toggle('visible',on);
+  if(!on){ uploadZone.classList.remove('visible'); resetUploadBtn(); }
+}
+function resetUploadBtn(){
+  btnToggleUpload.innerHTML='<i class="fas fa-plus"></i>Добавить фото';
+}
+
+btnToggleUpload.addEventListener('click',()=>{
+  const vis=uploadZone.classList.toggle('visible');
+  btnToggleUpload.innerHTML = vis
+    ? '<i class="fas fa-times"></i>Скрыть'
+    : '<i class="fas fa-plus"></i>Добавить фото';
+  if(vis) uploadZone.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+
+btnLogout.addEventListener('click',()=>{
+  if(hasUnsaved&&!confirm('Есть несохранённые изменения. Выйти?')) return;
+  setEditorMode(false);
+  hideSaveToast(); hasUnsaved=false;
+});
+
+/* ═══════════════════════════════════════════
+   9. ГАЛЕРЕЯ — рендер
+═══════════════════════════════════════════ */
+const galleryGrid= document.getElementById('galleryGrid');
+
+function buildGallery(){
+  galleryGrid.innerHTML='';
+  // Новые фото сверху
+  [...customItems].reverse().forEach(item=> galleryGrid.appendChild(createGItem(item)));
+  DEFAULT_ITEMS.forEach(item=> galleryGrid.appendChild(createGItem(item)));
+  applyFilter();
+}
+
+function createGItem(data){
+  const div=document.createElement('div');
+  div.className='g-item'+(data.wide?' wide':'');
+  div.dataset.cat   = data.cat;
+  div.dataset.custom= data.custom?'true':'false';
+  div.dataset.id    = data.id||'';
+  div.innerHTML=`
+    <img src="${data.src}" alt="${esc(data.alt)}" loading="lazy"/>
+    <div class="g-overlay">
+      <div class="g-overlay-text">
+        <h4>${esc(data.title)}</h4>
+        <span>${esc(data.sub)}</span>
+      </div>
+      <button class="g-del-btn" title="Удалить" aria-label="Удалить фото">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </div>`;
+  return div;
+}
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* Делегированный клик по галерее */
+galleryGrid.addEventListener('click', async e=>{
+  const del=e.target.closest('.g-del-btn');
+  if(del){
+    e.stopPropagation();
+    const item=del.closest('.g-item');
+    if(item.dataset.custom!=='true') return;
+    if(!confirm('Удалить это фото из галереи?')) return;
+    await deleteCustomItem(item.dataset.id);
+    return;
+  }
+  const item=e.target.closest('.g-item');
+  if(item){ const img=item.querySelector('img'); openLB(img.src,img.alt); }
+});
+
+async function deleteCustomItem(id){
+  // Освобождаем ObjectURL
+  const rec=customItems.find(c=>c.id===id);
+  if(rec&&rec.objectUrl) URL.revokeObjectURL(rec.objectUrl);
+
+  customItems=customItems.filter(c=>c.id!==id);
+
+  // Удаляем из IDB
+  try{
+    await idbDelete(CFG.IDB_STORE, id);
+    await saveMetaToIDB();
+    hasUnsaved=false; hideSaveToast();
+    showFlash('🗑️ Фото удалено и сохранено');
+  } catch(e){
+    console.error('Ошибка удаления из IDB:',e);
+    markUnsaved();
+  }
+  buildGallery();
+}
+
+/* ═══════════════════════════════════════════
+   10. ФИЛЬТРЫ
+═══════════════════════════════════════════ */
+document.querySelectorAll('.fbtn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    activeFilter=this.dataset.filter;
+    applyFilter();
+  });
+});
+function applyFilter(){
+  document.querySelectorAll('.g-item').forEach(item=>{
+    item.classList.toggle('hidden', activeFilter!=='all'&&item.dataset.cat!==activeFilter);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   11. ЗАГРУЗКА ФОТО → IndexedDB
+═══════════════════════════════════════════ */
+const fileInput  = document.getElementById('fileInput');
+const uploadMeta = document.getElementById('uploadMeta');
+const uConfirm   = document.getElementById('uConfirm');
+const idbProgress= document.getElementById('idbProgress');
+const idbProgFill= document.getElementById('idbProgressFill');
+const idbProgTxt = document.getElementById('idbProgressText');
+
+// Клик по зоне
+uploadZone.addEventListener('click',e=>{
+  if(!e.target.closest('button')&&!e.target.closest('input')&&!e.target.closest('select')&&isEditor)
+    fileInput.click();
+});
+uploadZone.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&isEditor) fileInput.click();
+});
+
+// Drag & Drop
+uploadZone.addEventListener('dragover',e=>{ e.preventDefault(); uploadZone.classList.add('drag'); });
+uploadZone.addEventListener('dragleave',()=>uploadZone.classList.remove('drag'));
+uploadZone.addEventListener('drop',e=>{
+  e.preventDefault(); uploadZone.classList.remove('drag');
+  if(isEditor) handleFiles(e.dataTransfer.files);
+});
+
+fileInput.addEventListener('change',()=>{ if(isEditor) handleFiles(fileInput.files); });
+
+function handleFiles(files){
+  const valid=Array.from(files).filter(f=>f.type.startsWith('image/'));
+  if(!valid.length){ alert('Выберите файлы изображений (JPG, PNG, WebP).'); return; }
+  pendingFiles=valid;
+  uploadMeta.classList.add('show');
+  document.getElementById('uName').focus();
+}
+
+uConfirm.addEventListener('click', async ()=>{
+  if(!pendingFiles.length) return;
+  const name= document.getElementById('uName').value.trim()||'Моя работа';
+  const cat = document.getElementById('uCat').value||'decor';
+
+  uConfirm.disabled=true;
+  idbProgress.classList.add('show');
+
+  const total=pendingFiles.length;
+  let done=0;
+
+  for(let i=0;i<total;i++){
+    const file=pendingFiles[i];
+    const id  ='c_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const title= name+(total>1?` #${i+1}`:'');
+
+    try{
+      // Сохраняем BLOB (не base64) — IndexedDB принимает большие бинарные данные
+      await idbPut(CFG.IDB_STORE, {id, blob:file, mimeType:file.type});
+
+      const objectUrl=URL.createObjectURL(file);
+      const meta={
+        id, title, alt:title,
+        sub:'Добавлено '+new Date().getFullYear(),
+        cat, wide:false, custom:true, objectUrl, src:objectUrl,
+      };
+      customItems.push(meta);
+
+    } catch(err){
+      console.error('Ошибка сохранения в IDB:',err);
+      // Fallback: FileReader → DataURL
+      const dataUrl=await readFileAsDataURL(file);
+      const objectUrl=dataUrl;
+      customItems.push({
+        id:'c_mem_'+Date.now()+'_'+i,
+        title, alt:title,
+        sub:'Добавлено '+new Date().getFullYear(),
+        cat, wide:false, custom:true, src:objectUrl,
+      });
+    }
+
+    done++;
+    const pct=Math.round(done/total*100);
+    idbProgFill.style.width=pct+'%';
+    idbProgTxt.textContent=`Сохранение ${done}/${total}...`;
+  }
+
+  // Сохраняем метаданные
+  try{
+    await saveMetaToIDB();
+    hasUnsaved=false; hideSaveToast();
+    showFlash(`✅ Добавлено ${total} фото — сохранено в IndexedDB`);
+  } catch(e){
+    console.error('Ошибка сохранения мета:',e);
+    markUnsaved();
+  }
+
+  // Сброс UI
+  pendingFiles=[];
+  document.getElementById('uName').value='';
+  document.getElementById('uCat').value='decor';
+  uploadMeta.classList.remove('show');
+  fileInput.value='';
+  uConfirm.disabled=false;
+  setTimeout(()=>{ idbProgress.classList.remove('show'); idbProgFill.style.width='0'; },1200);
+
+  buildGallery();
+  galleryGrid.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+function readFileAsDataURL(file){
+  return new Promise(res=>{
+    const r=new FileReader();
+    r.onload=e=>res(e.target.result);
+    r.readAsDataURL(file);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   12. СОХРАНЕНИЕ (ручное)
+═══════════════════════════════════════════ */
+const saveToast   = document.getElementById('saveToast');
+const toastSaveBtn= document.getElementById('toastSaveBtn');
+
+async function saveAll(){
+  try{
+    await saveMetaToIDB();
+    hasUnsaved=false; hideSaveToast();
+    showFlash('💾 Галерея сохранена в IndexedDB!');
+  } catch(e){
+    alert('Ошибка сохранения: '+e.message);
+  }
+}
+
+btnSaveNow.addEventListener('click', saveAll);
+toastSaveBtn.addEventListener('click', saveAll);
+
+function markUnsaved(){ hasUnsaved=true; saveToast.classList.add('show'); }
+function hideSaveToast(){ saveToast.classList.remove('show'); }
+
+// При закрытии вкладки — сохраняем автоматически
+window.addEventListener('beforeunload', e=>{
+  if(hasUnsaved&&isEditor){
+    saveMetaToIDB().catch(()=>{});
+    e.preventDefault();
+    e.returnValue='Есть несохранённые изменения. Выйти?';
+  }
+});
+// Мобильные: скрытие страницы
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden'&&isEditor)
+    saveMetaToIDB().catch(()=>{});
+});
+
+/* ═══════════════════════════════════════════
+   13. LIGHTBOX
+═══════════════════════════════════════════ */
+const lightbox= document.getElementById('lightbox');
+const lbImg   = document.getElementById('lbImg');
+function openLB(src,alt){ lbImg.src=src; lbImg.alt=alt||''; lightbox.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeLB(){ lightbox.classList.remove('open'); document.body.style.overflow=''; setTimeout(()=>lbImg.src='',300); }
+document.getElementById('lbClose').addEventListener('click',e=>{ e.stopPropagation(); closeLB(); });
+lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLB(); });
+
+/* ═══════════════════════════════════════════
+   14. TELEGRAM MODAL
+═══════════════════════════════════════════ */
+const tgModal= document.getElementById('tgModal');
+
+function openTgModal(){
+  // Отображаем номер
+  document.getElementById('tgPhoneDisplay').textContent=CFG.PHONE_DISPLAY;
+  // Сбрасываем поле сообщения
+  document.getElementById('tgPreMsg').value='Здравствуйте! Хочу сделать заказ.';
+  tgModal.classList.add('open');
+  document.body.style.overflow='hidden';
+  updateTgLinks();
+}
+function closeTgModal(){ tgModal.classList.remove('open'); document.body.style.overflow=''; }
+
+document.getElementById('btnTelegram').addEventListener('click', openTgModal);
+document.getElementById('tgClose').addEventListener('click', closeTgModal);
+tgModal.addEventListener('click',e=>{ if(e.target===tgModal) closeTgModal(); });
+
+// Обновляем ссылки при вводе текста
+document.getElementById('tgPreMsg').addEventListener('input', updateTgLinks);
+
+function updateTgLinks(){
+  const msg    = document.getElementById('tgPreMsg').value.trim();
+  const phone  = +79507243086 // очищаем
+  // Формат: t.me/+79999999999
+  const base   = `https://t.me/${+79507243086}`;
+  const withMsg= msg ? base+`?text=${encodeURIComponent(msg)}` : base;
+
+  // Кнопка «Открыть в приложении» — пробуем tg:// deep link
+  const tgApp  = msg
+    ? `tg://resolve?phone=${phone.replace('+','')}&text=${encodeURIComponent(msg)}`
+    : `tg://resolve?phone=${phone.replace('+',' ')}`;
+
+  const btnApp = document.getElementById('tgOpenApp');
+  const btnWeb = document.getElementById('tgOpenWeb');
+
+  btnApp.onclick=()=>{
+    // Пробуем открыть приложение
+    const link=document.createElement('a');
+    link.href=tgApp; link.click();
+    // Fallback через 1.5 сек — если приложение не открылось
+    setTimeout(()=>{ window.open(withMsg,'_blank','noopener,noreferrer'); },1500);
+  };
+  btnWeb.href=withMsg;
+}
+
+/* ═══════════════════════════════════════════
+   15. ВИДЕО
+═══════════════════════════════════════════ */
+function loadVid(){
+  const w=document.getElementById('vidWrap');
+  const h=w.offsetHeight; w.style.height=h+'px';
+  w.innerHTML=`<iframe src="https://www.youtube.com/embed/tYVVfqP9PdI?autoplay=1&rel=0" allow="autoplay;fullscreen;encrypted-media" allowfullscreen title="Изготовление пиалы с Уруси" style="width:100%;height:100%;border:0;display:block"></iframe>`;
+}
+const vidOv=document.getElementById('vidOv');
+vidOv.addEventListener('click',loadVid);
+vidOv.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' ') loadVid(); });
+
+/* ═══════════════════════════════════════════
+   16. ФОРМА
+═══════════════════════════════════════════ */
+document.getElementById('cform').addEventListener('submit',function(e){
+  e.preventDefault(); let ok=true;
+  ['fname','femail','fmsg'].forEach(id=>{
+    const el=document.getElementById(id);
+    const empty=!el.value.trim();
+    el.classList.toggle('err',empty); if(empty) ok=false;
+  });
+  const em=document.getElementById('femail');
+  if(em.value&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)){ em.classList.add('err'); ok=false; }
+  if(!ok) return;
+  const btn=document.getElementById('fsub'), ok2=document.getElementById('fok');
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i>Отправляю...';
+  setTimeout(()=>{
+    ok2.classList.add('show');
+    btn.innerHTML='<i class="fas fa-paper-plane"></i>Отправить сообщение'; btn.disabled=false;
+    this.reset(); setTimeout(()=>ok2.classList.remove('show'),6000);
+  },1800);
+});
+['fname','femail','fmsg'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',function(){ this.classList.remove('err'); });
+});
+
+/* ═══════════════════════════════════════════
+   17. ESC — закрывает все модалки
+═══════════════════════════════════════════ */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeLB(); closeTgModal(); closeAuth(); }
+});
+
+/* ═══════════════════════════════════════════
+   18. FLASH УВЕДОМЛЕНИЕ
+═══════════════════════════════════════════ */
+function showFlash(msg){
+  const el=document.createElement('div');
+  el.style.cssText='position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:#065f46;color:#fff;padding:10px 22px;border-radius:10px;font-size:.88rem;font-weight:700;z-index:700;box-shadow:0 4px 18px rgba(0,0,0,.2);white-space:nowrap;max-width:90vw;text-align:center';
+  el.textContent=msg;
+  document.body.appendChild(el);
+  el.animate([{opacity:0,transform:'translateX(-50%) translateY(8px)'},{opacity:1,transform:'translateX(-50%) translateY(0)'}],{duration:300,fill:'forwards'});
+  setTimeout(()=>{ el.animate([{opacity:1},{opacity:0}],{duration:300,fill:'forwards'}); setTimeout(()=>el.remove(),300); },2800);
+}
+
+/* ═══════════════════════════════════════════
+   ИНИЦИАЛИЗАЦИЯ
+═══════════════════════════════════════════ */
+(async ()=>{
+  await initIDB();
+  await loadCustomFromIDB();
+  buildGallery();
+  updateTgLinks();
+})();
+</script>
+</body>
+</html>
